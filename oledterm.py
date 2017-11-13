@@ -54,9 +54,10 @@ def main():
         size = 6
 
         font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
+        term = terminal(device, font, animate=False)
 
-        term.println("Terminal mode demo")
+        term.println("oledterm starting...")
+
         term.println("------------------")
         term.println("Uses any font to output text using a number of different print methods.")
         term.println()
