@@ -72,8 +72,8 @@ def main():
 
 
 if __name__ == "__main__":
-    os.system("stty rows %d" % (ROWS,))
-    os.system("stty cols %d" % (COLS,)) 
+    os.system("sudo stty --file=/dev/console rows %d" % (ROWS,))
+    os.system("sudo stty --file=/dev/console cols %d" % (COLS,)) 
     try:
         device = get_device()
         main()
