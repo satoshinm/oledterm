@@ -14,8 +14,8 @@ python /home/pi/oledterm/oledterm.py --display ssd1325 --interface spi --rotate 
 then attach a keyboard, and you can interact with the terminal as normal.
 Example running uname:
 
-![uname](https://user-images.githubusercontent.com/26856618/32824814-52bb1466-c997-11e7-8b0c-00db29a27c76.png)
+![uname](https://user-images.githubusercontent.com/26856618/32824815-52cfa9a8-c997-11e7-9fc2-4309655835d2.png)
 
-and since it uses your terminal, even programs like vim work as expected:
+and since it uses your terminal, even full-screen programs like vim work as expected:
 
-![vim](https://user-images.githubusercontent.com/26856618/32824815-52cfa9a8-c997-11e7-9fc2-4309655835d2.png)
+![vim](https://user-images.githubusercontent.com/26856618/32824814-52bb1466-c997-11e7-8b0c-00db29a27c76.png)
