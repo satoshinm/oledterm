@@ -19,3 +19,5 @@ Example running uname:
 and since it uses your terminal, even full-screen programs like vim work as expected:
 
 ![vim](https://user-images.githubusercontent.com/26856618/32824814-52bb1466-c997-11e7-8b0c-00db29a27c76.png)
+
+As seen in *[Building a small custom Raspberry Pi Zero laptop in a cardboard box](https://satoshinm.github.io/blog/171112_building_a_small_custom_raspberry_pi_zero_laptop_in_a_cardboard_box.html)*.
