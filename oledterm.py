@@ -8,6 +8,7 @@
 import os
 import time
 import sys
+import subprocess
 from luma.core import cmdline
 from luma.core.virtual import terminal
 from PIL import ImageFont
@@ -64,16 +65,17 @@ def main():
     time.sleep(1)
 
     while True:
-        data = file(VIRTUAL_TERMINAL_DEVICE).read()
+        #data = file(VIRTUAL_TERMINAL_DEVICE).read()
+        data = subprocess.check_output(["screendump"])
         term.clear()
-        term.println(data)
+        term.puts(data)
         term.flush()
-        time.sleep(2)
+        #time.sleep(2)
 
 
 if __name__ == "__main__":
-    os.system("sudo stty --file=/dev/console rows %d" % (ROWS,))
-    os.system("sudo stty --file=/dev/console cols %d" % (COLS,)) 
+    os.system("stty --file=/dev/console rows %d" % (ROWS,))
+    os.system("stty --file=/dev/console cols %d" % (COLS,))
     try:
         device = get_device()
         main()
