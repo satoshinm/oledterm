@@ -15,7 +15,7 @@ from PIL import ImageFont
 
 VIRTUAL_TERMINAL_DEVICE = "/dev/vcsa"
 ROWS = 9
-COLS = 28
+COLS = 31
 
 # based on demo_opts.py
 from luma.core import cmdline, error
@@ -62,15 +62,68 @@ def main():
     term = terminal(device, font, animate=False)
 
     term.println("oledterm starting...")
-    time.sleep(1)
+    time.sleep(0.1)
+    term.clear()
+    for i in range(0, ROWS):
+        term.puts(str(i) * COLS)
+    term.flush()
+    #time.sleep(1)
 
     while True:
+        # Get terminal text; despite man page, `screendump` differs from reading vcs dev
         #data = file(VIRTUAL_TERMINAL_DEVICE).read()
         data = subprocess.check_output(["screendump"])
-        term.clear()
-        term.puts(data)
+	print [data]
+
+        # Try to avoid flashing - don't clear screen, only overwrite
+        #term.clear()
+        term._cx, term._cy = (0, 0)
+
+        # puts() flushes on newline(), so reimplement it ourselves
+        #term.puts(data)
+
+        # character x position, can't seem to use term._cx / term._cw (width) since cw=6 but term.font.getsize('-')0] is 4??
+        # TODO: even this isn't foolproof, spaces are smaller :(
+        x = 0
+
+        def padToNextLine():
+            #print "cx / cw = ", (term._cx / term._cw), "cx=",term._cx, "cw=",term._cw
+            #print term.font.getsize("_")[0]
+            #print "COLS - cx/cw = " , (COLS - term._cx / term._cw)
+            #term.puts("0123456789abc"[(term._cy / term._ch)] * (COLS - term._cx / term._cw))
+            #term.puts("0123456789abc"[(term._cy / term._ch)] * (COLS - x))
+            term.puts("_" * (COLS - x))
+
+        for char in data:
+            if char == '\r':
+                #padToNextLine()
+                term.carriage_return()
+                x = 0
+            elif char == '\n':
+                #term.newline()
+                # no scroll, no flush
+                padToNextLine()
+                term.carriage_return()
+                x = 0
+                term._cy += term._ch
+            elif char == '\b':
+                term.backspace()
+                x =- 1
+            elif char == '\t':
+                #term.tab()
+                # reimplemented to count tab width
+                soft_tabs = term.tabstop - ((term._cx // term._cw) % term.tabstop)
+                self.puts(" " * soft_tabs)
+                x += len(soft_tabs)
+            else:
+                term.putch(char)
+                x += 1
+        #padToNextLine()
+
         term.flush()
-        #time.sleep(2)
+        time.sleep(0.01)
+        #print "refresh"
+        #print data
 
 
 if __name__ == "__main__":
