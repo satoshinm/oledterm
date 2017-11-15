@@ -61,8 +61,6 @@ def main():
     font = make_font(fontname, size) if fontname else None
     term = terminal(device, font, animate=False)
 
-    term.println("oledterm starting...")
-    time.sleep(0.1)
     term.clear()
     for i in range(0, ROWS):
         term.puts(str(i) * COLS)
