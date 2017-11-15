@@ -71,7 +71,7 @@ def main():
         # Get terminal text; despite man page, `screendump` differs from reading vcs dev
         #data = file(VIRTUAL_TERMINAL_DEVICE).read()
         data = subprocess.check_output(["screendump"])
-	print [data]
+	#print [data]
 
         # Clear, but don't flush to avoid flashing
         #term.clear()
